@@ -16,7 +16,7 @@ defmodule PAccurateBackground do
 	#struct to pass in new candidate information
 	defstruct candidate: %{}		
 
-	def new(c) do 									#takes a map and returns a struct
+	def new(c) do 												#takes a map and returns a struct
 		%PAccurateBackground{candidate: c}
 	end
 
@@ -60,12 +60,10 @@ defmodule PAccurateBackground do
 											jobLocation: %{country: "US", region: "CA", city: "Irvine"}}
 
 		start_http_request
-		response = HTTPoison.post!(@ab_url <> @ab_version <> @ab_order,
-															 JSON.encode!(Map.to_list(order_details)),
-															 Map.to_list(@ab_headers),
-															 Map.to_list(@ab_options))
-		response.body
-			|> JSON.decode!
+		HTTPoison.post(@ab_url <> @ab_version <> @ab_order,
+									 JSON.encode!(Map.to_list(order_details)),
+									 Map.to_list(@ab_headers),
+									 Map.to_list(@ab_options))
 	end
 
 	def get_order_status(oid) do

@@ -7,6 +7,7 @@ defmodule EagleEye.Candidate do
 		field :candidate_id, :string
 		field :ssn, :string
 
+		has_many :orders, EagleEye.Order
 		timestamps
 	end
 end
