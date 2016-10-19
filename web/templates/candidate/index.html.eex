@@ -1,0 +1,16 @@
+<h1>Listing Candidates</h1>
+
+<table class="table">
+  <%= for candidate <- @candidates do %>
+    <tr>
+      <td><%= candidate.id %></td>
+      <td><%= candidate.first_name %></td>
+      <td><%= candidate.last_name %></td>
+      <td><%= Base.decode64!(candidate.ssn) %></td>
+      <td><b><%= candidate.candidate_id %></b></td>
+      <td><%= link "Show Candidate", to: candidate_path(@conn, :show, candidate.id)  %>
+    </tr>
+  <% end %>
+</table>
+
+<%= link "New Candidate", to: candidate_path(@conn, :index) %>

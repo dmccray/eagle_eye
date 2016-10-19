@@ -16,19 +16,7 @@ defmodule BackgroundCheck do
 			|> PAccurateBackground.new
 	end
 
-	def new_candidate(:pab) do
-		pac = %{dateOfBirth: "1972-05-24",
-						email: "waynerichardsllc@gmail.com",
-						firstName: "Hoor",
-						lastName: "Test",
-						phone: "206-555-1212",
-						ssn: "531901251",
-						address: "2117 Elm Street",
-						city: "Elk Grove",
-						region: "CA",
-						country: "US",
-						postalCode: "95758"}
-
+	def new_candidate(:pab, pac \\ %{}) do
 		{:ok, response} = PAccurateBackground.post_new_candidate(PAccurateBackground.new(pac)) 
 		candidate = response.body |> JSON.decode!
 		
@@ -40,11 +28,13 @@ defmodule BackgroundCheck do
 						})
 	end
 
-	def edit_candidate(:pab, ssn) do
-		edit_map = %{} #need to define a map of the things that need changing. Then passes it along to pab
-		
-		get_candidate(:pab, ssn)
-			|> PAccurateBackground.put_edit_candidate(edit_map) 
+	def edit_candidate(:pab, ssn, edit_map \\ %{}) do
+		pac = get_candidate(:pab, ssn)
+
+		{:ok, response} = PAccurateBackground.put_edit_candidate(pac, edit_map)
+		candidate = response.body |> JSON.decode!
+
+		#here we should update any info we have for the candidate (i.e. SSN, name). use Ecto Changesets. Future enhancement.
 		
 	end
 

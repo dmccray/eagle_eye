@@ -15,7 +15,9 @@ defmodule EagleEye.Router do
 
   scope "/", EagleEye do
     pipe_through :browser # Use the default browser stack
-
+		
+		get "/candidates", CandidateController, :index
+		get "/candidates/:id", CandidateController, :show
     get "/", PageController, :index
   end
 

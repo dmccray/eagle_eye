@@ -1,0 +1,21 @@
+<h1>Showing Candidate</h1>
+
+<%= @candidate.first_name %><br/>
+<%= @candidate.last_name %><br/>
+<%= Base.decode64!(@candidate.ssn) %><br/>
+<b><%= @candidate.candidate_id %></b>
+
+<table class="table">
+  <%=  for order <- @orders do %>
+    <tr>
+      <td><%= order.id %></td>
+      <td><b><%= order.order_id %></b></td>
+      <td><%= order.ee_cost %></td>
+    </tr>
+  <%= end %>
+</table>
+
+<br/>
+
+<%= link "Back to Candidates", to: candidate_path(@conn, :index) %> |
+<%= link "New Order", to: candidate_path(@conn, :index) %>

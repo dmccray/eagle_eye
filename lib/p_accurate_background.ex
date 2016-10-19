@@ -44,11 +44,9 @@ defmodule PAccurateBackground do
 		edit_string = List.foldl(Map.to_list(edit_map),"", fn(x, acc) -> acc <> to_string(elem(x,0)) <> "=" <> String.replace(elem(x,1), " ", "+") <> "&" end) |> String.trim("&")
 
 		start_http_request
-		response = HTTPoison.put!(@ab_url <> @ab_version <> @ab_candidate <> "/" <> cid,
-															edit_string, Map.to_list(@ab_headers_put),
-															Map.to_list(@ab_options_put))
-		response.body
-			|> JSON.decode!
+		HTTPoison.put(@ab_url <> @ab_version <> @ab_candidate <> "/" <> cid,
+									 edit_string, Map.to_list(@ab_headers_put),
+									 Map.to_list(@ab_options_put))
 	end
 
 	def post_order(c) do  						#expecting a struct %PAccurateBackground(candidate: c) #need additional parameters for the options
