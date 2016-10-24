@@ -1,0 +1,49 @@
+<h1>New Candidate</h1>
+
+<%= form_for @changeset, candidate_path(@conn, :create), fn f -> %>
+  <div class="form-group">
+    <%= text_input f, :firstName, placeholder: "First Name", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= text_input f, :lastName, placeholder: "Last Name", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= text_input f, :ssn, placeholder: "SSN", class: "form-control" %>
+  </div>
+	  
+  <div class="form-group">
+    <%= email_input f, :email, placeholder: "Email Address", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= text_input f, :dateOfBirth, placeholder: "Date of Birth", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= text_input f, :address, placeholder: "Address", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= text_input f, :city, placeholder: "City", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= select f, :region, ["CA"], prompt: "State", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= select f, :country, ["US"], prompt: "Country", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= text_input f, :postalCode, placeholder: "Zip Code", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= telephone_input f, :phone, placeholder: "Phone Number", class: "form-control" %>
+  </div>
+  
+  <%= submit "Create Candidate", class: "btn btn-primary" %>
+<% end %>

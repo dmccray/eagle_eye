@@ -1,0 +1,8 @@
+<h1>New Order</h1>
+
+<%= form_for @changeset, candidate_order_path(@conn, :create, @candidate), fn f -> %>
+  <div class="form-group">
+    <%= text_input f, :ee_cost, placeholder: "Cost of Order", class: "form-control" %>
+  </div>
+  <%= submit "Create Order", class: "btn btn-primary" %>
+<% end %>

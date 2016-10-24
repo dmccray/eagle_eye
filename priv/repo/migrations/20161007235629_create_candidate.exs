@@ -3,10 +3,11 @@ defmodule EagleEye.Repo.Migrations.CreateCandidate do
 
   def change do
   	create table(:candidates) do
-  		add :first_name, :string
-  		add :last_name, :string
+  		add :firstName, :string
+  		add :lastName, :string
   		add :candidate_id, :string
   		add :ssn, :string
+			add :organization_id, references :organizations
 
   		timestamps
   	end

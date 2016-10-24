@@ -4,8 +4,8 @@
   <%= for candidate <- @candidates do %>
     <tr>
       <td><%= candidate.id %></td>
-      <td><%= candidate.first_name %></td>
-      <td><%= candidate.last_name %></td>
+      <td><%= candidate.firstName %></td>
+      <td><%= candidate.lastName %></td>
       <td><%= Base.decode64!(candidate.ssn) %></td>
       <td><b><%= candidate.candidate_id %></b></td>
       <td><%= link "Show Candidate", to: candidate_path(@conn, :show, candidate.id)  %>
@@ -13,4 +13,4 @@
   <% end %>
 </table>
 
-<%= link "New Candidate", to: candidate_path(@conn, :index) %>
+<%= link "New Candidate", to: candidate_path(@conn, :new) %>

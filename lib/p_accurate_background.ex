@@ -32,7 +32,7 @@ defmodule PAccurateBackground do
 	def post_new_candidate(pac) do 					#expecting a struct %PAccurateBackground(candidate: c)
 		start_http_request
 		HTTPoison.post(@ab_url <> @ab_version <> @ab_candidate,
-									 JSON.encode!(Map.to_list(pac.candidate)),
+									 JSON.encode!(Map.to_list(convert_map_string_to_atom(pac.candidate))),
 									 Map.to_list(@ab_headers),
 									 Map.to_list(@ab_options))
 	end
@@ -49,9 +49,8 @@ defmodule PAccurateBackground do
 									 Map.to_list(@ab_options_put))
 	end
 
-	def post_order(c) do  						#expecting a struct %PAccurateBackground(candidate: c) #need additional parameters for the options
-		cid = Map.fetch!(c.candidate, "id")
-		order_details = %{candidateId: cid,
+	def post_order(pac) do  					#expecting a struct %PAccurateBackground(candidate: c) #need additional parameters for the options
+		order_details = %{candidateId: Map.fetch!(convert_map_string_to_atom(pac.candidate), :id),
 											packageType: "PKG_EMPTY",
 											workflow: "EXPRESS",
 											copyOfReport: "true",
@@ -73,5 +72,9 @@ defmodule PAccurateBackground do
 			|> JSON.decode!
 	end
 
+	defp convert_map_string_to_atom(m) do
+		for {key, val} <- m, into: %{}, do: {String.to_atom(key), val} 
+	end
+		
 	defp start_http_request, do: HTTPoison.start()
 end

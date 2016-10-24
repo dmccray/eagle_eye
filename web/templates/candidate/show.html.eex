@@ -1,7 +1,7 @@
 <h1>Showing Candidate</h1>
 
-<%= @candidate.first_name %><br/>
-<%= @candidate.last_name %><br/>
+<%= @candidate.firstName %><br/>
+<%= @candidate.lastName %><br/>
 <%= Base.decode64!(@candidate.ssn) %><br/>
 <b><%= @candidate.candidate_id %></b>
 
@@ -18,4 +18,5 @@
 <br/>
 
 <%= link "Back to Candidates", to: candidate_path(@conn, :index) %> |
-<%= link "New Order", to: candidate_path(@conn, :index) %>
+<%= link "Edit Candidate", to: candidate_path(@conn, :show, @candidate.id) %> |
+<%= link "New Order", to: candidate_order_path(@conn, :new, @candidate.id) %>
