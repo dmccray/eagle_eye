@@ -4,7 +4,7 @@ defmodule EagleEye.Organization do
 	schema "organizations" do
 		field :name, :string
 
-		has_many :candidates, EagleEye.Candidate
+		#has_one :candidate, EagleEye.Candidate
 		timestamps
 	end
 end

@@ -2,6 +2,10 @@
 
 <%= form_for @changeset, candidate_path(@conn, :create), fn f -> %>
   <div class="form-group">
+    <%= select f, :organization_id, @organizations, prompt: "Organization", class: "form-control"%>
+  </div>
+
+  <div class="form-group">
     <%= text_input f, :firstName, placeholder: "First Name", class: "form-control" %>
   </div>
 
@@ -12,7 +16,7 @@
   <div class="form-group">
     <%= text_input f, :ssn, placeholder: "SSN", class: "form-control" %>
   </div>
-	  
+  
   <div class="form-group">
     <%= email_input f, :email, placeholder: "Email Address", class: "form-control" %>
   </div>
@@ -44,6 +48,6 @@
   <div class="form-group">
     <%= telephone_input f, :phone, placeholder: "Phone Number", class: "form-control" %>
   </div>
-  
+ 
   <%= submit "Create Candidate", class: "btn btn-primary" %>
 <% end %>

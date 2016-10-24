@@ -5,7 +5,13 @@ defmodule EagleEye.CandidateController do
 	alias EagleEye.Organization
 
 	def index(conn, _params) do
-		candidates = Repo.all(Candidate)
+		query =
+			from c in Candidate,
+			left_join: o in assoc(c, :organization),
+			preload: :organization,
+			order_by: [asc: o.name, desc: c.id]
+
+		candidates = Repo.all(query)
 		render conn, "index.html", candidates: candidates
 	end
 
@@ -17,15 +23,14 @@ defmodule EagleEye.CandidateController do
 
 	def new(conn, _params) do
 		changeset = Candidate.changeset(%Candidate{})
-		#organizations = Repo.all(from o in Organization, select: {o.id, o.name})
+		organizations = Repo.all(from o in Organization, select: {o.name, o.id})
+
+		#changeset = candidate |> Ecto.build_assoc(:orders) |> Order.changeset(order_db_columns)
 		
-		render conn, "new.html", changeset: changeset
+		render conn, "new.html", changeset: changeset, organizations: organizations
 	end
 
 	def create(conn, %{"candidate" => candidate_params}) do
-		#bc_candidate = candidate_params		#should be all fields available from the form
-		#changeset = Candidate.changeset(%Candidate{}, Map.take(candidate_params, ["first_name", "last_name", "ssn"]))
-		
 		case BackgroundCheck.new_candidate(:pab, candidate_params) do
 			{:ok, candidate} ->	
 				conn

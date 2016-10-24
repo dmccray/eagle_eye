@@ -21,8 +21,10 @@ defmodule BackgroundCheck do
 			{:ok, response} -> 
 				candidate = response.body |> JSON.decode!
 				candidate_db_columns = 	Map.put(pac, "candidate_id", Map.fetch!(candidate, "id"))
-					|> Map.take(["firstName", "lastName", "ssn", "candidate_id"])
-					|> Map.update!("ssn", &(Base.encode64(&1)))
+				|> Map.take(["firstName", "lastName", "ssn", "candidate_id", "organization_id"])
+				|> Map.update!("ssn", &(Base.encode64(&1)))
+
+				#IO.puts candidate_db_columns
 				
 				changeset = Candidate.changeset(%Candidate{}, candidate_db_columns)
 
