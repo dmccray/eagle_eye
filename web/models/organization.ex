@@ -4,7 +4,13 @@ defmodule EagleEye.Organization do
 	schema "organizations" do
 		field :name, :string
 
-		#has_one :candidate, EagleEye.Candidate
 		timestamps
 	end
+
+	def changeset(model, params \\ %{}) do
+		model
+		|> cast(params, ~w(name))
+	end
+
+	
 end

@@ -1,0 +1,7 @@
+<h3>Organization</h3>
+
+<%= @organization.name %> <br/><br/>
+
+<%= link "Back to Organizations", to: organization_path(@conn, :index) %>
+<%= link "Edit Candidate", to: candidate_path(@conn, :show) %>
+

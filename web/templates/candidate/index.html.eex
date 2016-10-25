@@ -22,4 +22,5 @@
   <% end %>
 </table>
 
-<%= link "New Candidate", to: candidate_path(@conn, :new) %>
+<%= link "New Candidate", to: candidate_path(@conn, :new) %> |
+<%= link "Organizations", to: organization_path(@conn, :index) %>

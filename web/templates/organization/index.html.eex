@@ -1,0 +1,21 @@
+<h3>Organizations</h3>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Organization ID</th>
+      <th>Organization Name</th>
+    </tr>
+  </thead>
+
+  <%= for org <- @organizations do  %>
+    <tr>
+      <td><%= org.id %></td>
+      <td><%= org.name %></td>
+      <td><%= link "Show Organization", to: organization_path(@conn, :show, org.id) %>
+    </tr>
+  <% end %>
+</table>
+
+<%= link "New Organization", to: organization_path(@conn, :new) %> |
+<%= link "Return to Candidates", to: candidate_path(@conn, :index) %>

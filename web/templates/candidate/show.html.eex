@@ -1,4 +1,4 @@
-<h1>Showing Candidate</h1>
+<h3>Candidate</h3>
 
 <%= @candidate.firstName %><br/>
 <%= @candidate.lastName %><br/>

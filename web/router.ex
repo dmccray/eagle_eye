@@ -20,7 +20,8 @@ defmodule EagleEye.Router do
 		resources "/candidates", CandidateController, only: [:index, :show, :new, :create] do
 			resources "/orders", OrderController, only: [:show, :new, :create]
 		end
-		
+
+		resources "/organizations", OrganizationController, only: [:index, :show, :new, :create]
   end
 
   # Other scopes may use custom stacks.
