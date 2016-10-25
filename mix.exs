@@ -19,7 +19,7 @@ defmodule EagleEye.Mixfile do
   def application do
     [mod: {EagleEye, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :httpoison, :comeonin]]
+                    :phoenix_ecto, :postgrex, :httpoison, :gutenex, :comeonin]]
   end
 
   # Specifies which paths to compile per environment.
@@ -40,6 +40,7 @@ defmodule EagleEye.Mixfile do
      {:cowboy, "~> 1.0"},
      {:json, "~> 1.0"},
      {:httpoison, "~> 0.9.0"},
+		 {:gutenex, "~> 0.2"},
      {:comeonin, "~> 2.5"}]
   end
 

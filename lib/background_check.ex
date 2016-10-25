@@ -9,11 +9,10 @@ defmodule BackgroundCheck do
 	# find a way to make a protocol to make the calls via various APIs polymorphic
 	# right now just using pattern matching with functions for the different potential background check vendors
 
-	def get_candidate(:pab, ssn) do
-		Repo.one(from c in Candidate, where: c.ssn == ^Base.encode64(ssn))
-			|> Map.fetch!(:candidate_id)
-			|> PAccurateBackground.get_candidate
-			|> PAccurateBackground.new
+	def get_candidate(:pab, cid) do
+		cid
+		|> PAccurateBackground.get_candidate
+		|> PAccurateBackground.new
 	end
 
 	def new_candidate(:pab, pac \\ %{}) do
@@ -24,22 +23,18 @@ defmodule BackgroundCheck do
 				|> Map.take(["firstName", "lastName", "ssn", "candidate_id", "organization_id"])
 				|> Map.update!("ssn", &(Base.encode64(&1)))
 
-				#IO.puts candidate_db_columns
-				
 				changeset = Candidate.changeset(%Candidate{}, candidate_db_columns)
-
 				Repo.insert(changeset)
 		end
 	end
 
-	def edit_candidate(:pab, ssn, edit_map \\ %{}) do
-		pac = get_candidate(:pab, ssn)
+	def edit_candidate(:pab, cid, edit_map \\ %{}) do
+		pac = get_candidate(:pab, cid)
 
 		{:ok, response} = PAccurateBackground.put_edit_candidate(pac, edit_map)
 		candidate = response.body |> JSON.decode!
 
 		#here we should update any info we have for the candidate (i.e. SSN, name). use Ecto Changesets. Future enhancement.
-		
 	end
 
 	def new_order(:pab, candidate_id, order_params) do
@@ -47,12 +42,15 @@ defmodule BackgroundCheck do
 		candidate = Repo.get!(Candidate, candidate_id) |> Repo.preload([:orders, :organization])
 
 		#getting data from the API
-		pac = candidate
-		|> Map.fetch!(:candidate_id)
-		|> PAccurateBackground.get_candidate
-		|> PAccurateBackground.new
+		pac = get_candidate(:pab, candidate.candidate_id)
+
+		#getting the job location from order_params
+		jlm = %{%{country: nil, region: nil, city: nil} |
+						country: order_params["job_location_country"],
+						region: order_params["job_location_region"],
+						city: order_params["job_location_city"]}
 		
-		case PAccurateBackground.post_order(pac) do
+		case PAccurateBackground.post_order(pac, "PKG_EMPTY", "EXPRESS", "true", jlm) do	#check out API documentation for order  options
 			{:ok, response} ->
 				order = response.body |> JSON.decode!
 				order_db_columns = Map.put(order, "order_id", Map.fetch!(order, "id"))

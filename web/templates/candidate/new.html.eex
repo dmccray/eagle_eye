@@ -34,11 +34,11 @@
   </div>
 
   <div class="form-group">
-    <%= select f, :region, ["CA"], prompt: "State", class: "form-control" %>
+    <%= select f, :region, get_state_list, prompt: "State", class: "form-control" %>
   </div>
 
   <div class="form-group">
-    <%= select f, :country, ["US"], prompt: "Country", class: "form-control" %>
+    <%= select f, :country, ["US", "CA", "MX"], prompt: "Country", class: "form-control" %>
   </div>
 
   <div class="form-group">
@@ -51,3 +51,5 @@
  
   <%= submit "Create Candidate", class: "btn btn-primary" %>
 <% end %>
+
+<%= link "Back to Candidates", to: candidate_path(@conn, :index) %>

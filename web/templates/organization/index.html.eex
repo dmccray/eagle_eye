@@ -17,5 +17,6 @@
   <% end %>
 </table>
 
-<%= link "New Organization", to: organization_path(@conn, :new) %> |
-<%= link "Return to Candidates", to: candidate_path(@conn, :index) %>
+<%= link "Back to Candidates", to: candidate_path(@conn, :index) %> |
+<%= link "New Organization", to: organization_path(@conn, :new) %>
+

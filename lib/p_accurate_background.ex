@@ -49,12 +49,12 @@ defmodule PAccurateBackground do
 									 Map.to_list(@ab_options_put))
 	end
 
-	def post_order(pac) do  					#expecting a struct %PAccurateBackground(candidate: c) #need additional parameters for the options
+	def post_order(pac, package_type, workflow, copy_of_report, job_location_map) do  			#expecting a struct %PAccurateBackground(candidate: c) #need additional parameters for the options
 		order_details = %{candidateId: Map.fetch!(convert_map_string_to_atom(pac.candidate), :id),
-											packageType: "PKG_EMPTY",
-											workflow: "EXPRESS",
-											copyOfReport: "true",
-											jobLocation: %{country: "US", region: "CA", city: "Irvine"}}
+											packageType: package_type,
+											workflow: workflow,
+											copyOfReport: copy_of_report,
+											jobLocation: job_location_map}
 
 		start_http_request
 		HTTPoison.post(@ab_url <> @ab_version <> @ab_order,

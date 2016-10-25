@@ -6,7 +6,7 @@ defmodule EagleEye.Candidate do
 		field :lastName, :string
 		field :candidate_id, :string
 		field :ssn, :string
-
+		
 		belongs_to :organization, EagleEye.Organization #the belongs_to inserts the fk organization_id
 		has_many :orders, EagleEye.Order
 		timestamps

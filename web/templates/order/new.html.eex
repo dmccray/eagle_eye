@@ -4,5 +4,14 @@
   <div class="form-group">
     <%= text_input f, :ee_cost, placeholder: "Cost of Order", class: "form-control" %>
   </div>
+  <div class="form-group">
+    <%= text_input f, :job_location_city, placeholder: "Job Location City", class: "form-control"%>
+  </div>
+  <div class="form-group">
+    <%= select f, :job_location_region, get_state_list, prompt: "Job Location Region", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= select f, :job_location_country, ["US", "CA", "MX"], prompt: "Job Location Country", class: "form-control" %>
+  </div>
   <%= submit "Create Order", class: "btn btn-primary" %>
 <% end %>

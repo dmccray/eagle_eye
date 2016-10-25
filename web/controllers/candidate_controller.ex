@@ -17,15 +17,15 @@ defmodule EagleEye.CandidateController do
 
 	def show(conn, %{"id" => id}) do
 		candidate = Repo.get(Candidate, id)
+		candidate_from_api = BackgroundCheck.get_candidate(:pab, candidate.candidate_id)
 		orders = Repo.all(from o in Order, where: o.candidate_id == ^id)
-		render conn, "show.html", candidate: candidate, orders: orders
+		
+		render conn, "show.html", candidate: candidate, candidate_from_api: candidate_from_api.candidate, orders: orders
 	end
 
 	def new(conn, _params) do
 		changeset = Candidate.changeset(%Candidate{})
 		organizations = Repo.all(from o in Organization, select: {o.name, o.id})
-
-		#changeset = candidate |> Ecto.build_assoc(:orders) |> Order.changeset(order_db_columns)
 		
 		render conn, "new.html", changeset: changeset, organizations: organizations
 	end
