@@ -26,7 +26,7 @@ defmodule PAccurateBackground do
 															Map.to_list(@ab_headers),
 															Map.to_list(@ab_options))
 		response.body
-			|> JSON.decode!
+		|> JSON.decode!
 	end
 
 	def post_new_candidate(pac) do 					#expecting a struct %PAccurateBackground(candidate: c)
@@ -66,10 +66,11 @@ defmodule PAccurateBackground do
 	def get_order_status(oid) do
 		start_http_request
 		response = HTTPoison.get!(@ab_url <> @ab_version <> @ab_order <> "/" <> oid,
-															Map.to_list(@ab_headers),
-															Map.to_list(@ab_options))
+									Map.to_list(@ab_headers),
+									Map.to_list(@ab_options))
+
 		response.body
-			|> JSON.decode!
+		|> JSON.decode!
 	end
 
 	defp convert_map_string_to_atom(m) do

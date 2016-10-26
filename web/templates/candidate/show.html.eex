@@ -1,6 +1,5 @@
 <h3>Candidate</h3>
 
-
 <table class="table">
   <tr>
     <td><b>First Name</b></td>
@@ -48,16 +47,18 @@
       <td><b>Background Check Orders</b></td>
     </tr>
     <tr>
-      <td>Number</td>
-      <td>Order ID</td>
-      <td>Our Price</td>
+      <td><b>Number</b></td>
+      <td><b>Order ID</b></td>
+      <td><b>Our Price</b></td>
+      <td>&nbsp;</td>
     </tr>
   </thead>
   <%=  for order <- @orders do %>
     <tr>
       <td><%= order.id %></td>
-      <td><b><%= order.order_id %></b></td>
+      <td><%= order.order_id %></td>
       <td><%= order.ee_cost %></td>
+      <td><%= link "Download Report", to: pdf_path(@conn, :export, [order_id: order.id, candidate_id: @candidate.id]) %>
     </tr>
   <%= end %>
 </table>

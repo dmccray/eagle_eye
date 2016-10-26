@@ -16,12 +16,14 @@ defmodule EagleEye.Router do
   scope "/", EagleEye do
     pipe_through :browser # Use the default browser stack
 		
-    get "/", PageController, :index
+    get "/", CandidateController, :index
 		resources "/candidates", CandidateController, only: [:index, :show, :new, :create] do
 			resources "/orders", OrderController, only: [:show, :new, :create]
 		end
 
 		resources "/organizations", OrganizationController, only: [:index, :show, :new, :create]
+
+		get "/pdf", PdfController, :export
   end
 
   # Other scopes may use custom stacks.

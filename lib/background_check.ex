@@ -65,5 +65,6 @@ defmodule BackgroundCheck do
 	end
 
 	def get_order_status(:pab, oid) do
+		PAccurateBackground.get_order_status(oid)
 	end
 end

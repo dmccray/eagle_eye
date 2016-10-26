@@ -1,0 +1,68 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>EagleEye</title>
+    <link rel="stylesheet" href="/Users/Dee/workspace/eagle_eye/web/static/css/app.css">
+  </head>
+
+  <body>
+    <div class="container">
+      <header class="header">
+        <span class="logo"><img src="/Users/Dee/workspace/eagle_eye/web/static/assets/images/eagle_eye.png"></span>
+      </header>
+
+      <h2>Order Report</h2>
+      <br/>
+      
+      <table class="table">
+	<tr>
+	  <td>Status</td>
+	  <td><%=  @order_from_api["status"] %></td>
+	</tr>
+	<tr>
+	  <td>Result</td>
+	  <td><%= @order_from_api["result"] %></td>
+	</tr>
+	<tr>
+      </table>
+      <br/>
+      <br/>
+
+      <table class="table">
+	<tr>
+	  <td><b>First Name</b></td>
+	  <td><%= @candidate.firstName %></td>
+	</tr>
+	<tr>
+	  <td><b>Last Name</b></td>
+	  <td><%= @candidate.lastName %></td>
+	</tr>
+	<tr>
+	  <td><b>SSN</b></td>
+	  <td><%= Base.decode64!(@candidate.ssn) %></td>
+	</tr>
+	<tr>
+	  <td><b>Address</b></td>
+	  <td><%= Map.fetch!(@candidate_from_api,"address") %></td>
+	</tr>
+	<tr>
+	  <td><b>City</b></td>
+	  <td><%= Map.fetch!(@candidate_from_api,"city") %></td>
+	</tr>
+	<tr>
+	  <td><b>Region</b></td>
+	  <td><%= Map.fetch!(@candidate_from_api,"region") %></td>
+	</tr>
+	<tr>
+	  <td><b>Country</b></td>
+	  <td><%= Map.fetch!(@candidate_from_api,"country") %></td>
+	</tr>
+	<tr>
+	  <td><b>Zip Code</b></td>
+	  <td><%= Map.fetch!(@candidate_from_api,"postalCode") %></td>
+	</tr>
+      </table>
+
+    </div> <!-- /container -->
+  </body>
+</html>
