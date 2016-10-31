@@ -29,7 +29,7 @@ defmodule EagleEye.PdfController do
 	defp create_pdf(html) do
 		IO.puts html
 		
-		PdfGenerator.generate_binary!(html, delete_temporary: true)
+		PdfGenerator.generate_binary!(html, command_prefix: "xvfb-run", delete_temporary: true)
 	end
 	
 end
