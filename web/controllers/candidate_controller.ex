@@ -4,6 +4,12 @@ defmodule EagleEye.CandidateController do
 	alias EagleEye.Order
 	alias EagleEye.Organization
 
+	plug :authenticate when action in [:index, :show, :new, :create]
+
+	def login(conn, _params) do
+		render conn, "login.html"
+	end
+	
 	def index(conn, _params) do
 		query =
 			from c in Candidate,
@@ -41,6 +47,17 @@ defmodule EagleEye.CandidateController do
 				conn
 				|> put_flash(:error, "candidate not created!")
 				|> redirect(to: candidate_path(conn, :index))
+		end
+	end
+
+	defp authenticate(conn, _opts) do
+		if conn.assigns.current_user do
+			conn
+		else
+			conn
+			|> put_flash(:error, "You must be logged in to access.")
+			|> redirect(to: candidate_path(conn, :index))
+			|> halt()
 		end
 	end
 end

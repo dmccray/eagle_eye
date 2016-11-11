@@ -16,8 +16,14 @@
       <header class="header">
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
-            <li><%= link "Home", to: candidate_path(@conn, :index) %></li>
-	    <li><%= link "Login", to: candidate_path(@conn, :index) %></li>
+	    <%= if @current_user do %>
+	      <li><%= @current_user.name %></li>
+	      <!--  <li><%= link "Home", to: candidate_path(@conn, :index) %></li> -->
+	      <li>&nbsp;</li>
+	      <li><%= link "Logout", to: session_path(@conn, :delete, @current_user), method: "delete" %></li>
+	    <% else %>
+	     <!--  <li><%= link "Login", to: session_path(@conn, :new) %></li> -->
+	    <% end %>
           </ul>
         </nav>
         <span class="logo"></span>
