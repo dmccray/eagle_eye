@@ -3,6 +3,8 @@ defmodule EagleEye.OrderController do
 	alias EagleEye.Candidate
 	alias EagleEye.Order
 
+	plug :authenticate when action in [:index, :show, :new, :create]
+	
 	def new(conn, _params) do
 		candidate = Repo.get!(Candidate, Map.fetch!(_params, "candidate_id"))
 		changeset = Order.changeset(%Order{})
@@ -21,6 +23,17 @@ defmodule EagleEye.OrderController do
 				conn
 				|> put_flash(:error, "Order not created!")
 				|> redirect(to: candidate_path(conn, :show, candidate_id, changeset: reason))
+		end
+	end
+
+	defp authenticate(conn, _opts) do
+		if conn.assigns.current_user do
+			conn
+		else
+			conn
+			|> put_flash(:error, "You must be logged in to access.")
+			|> redirect(to: session_path(conn, :new))
+			|> halt()
 		end
 	end
 end

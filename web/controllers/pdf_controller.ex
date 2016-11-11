@@ -4,6 +4,8 @@ defmodule EagleEye.PdfController do
 	alias EagleEye.Order
 	alias EagleEye.Organization
 
+	plug :authenticate when action in [:export]
+	
 	def export(conn, %{"candidate_id" => candidate_id, "order_id" => order_id}) do
 		candidate = EagleEye.Repo.get(Candidate, candidate_id) #so far no need to preload
 		candidate_from_api = BackgroundCheck.get_candidate(:pab, candidate.candidate_id)
@@ -31,5 +33,15 @@ defmodule EagleEye.PdfController do
 		
 		PdfGenerator.generate_binary!(html, command_prefix: "xvfb-run", delete_temporary: true)
 	end
-	
+
+	defp authenticate(conn, _opts) do
+		if conn.assigns.current_user do
+			conn
+		else
+			conn
+			|> put_flash(:error, "You must be logged in to access.")
+			|> redirect(to: session_path(conn, :new))
+			|> halt()
+		end
+	end
 end

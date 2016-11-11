@@ -2,6 +2,8 @@ defmodule EagleEye.OrganizationController do
 	use EagleEye.Web, :controller
 	alias EagleEye.Organization
 
+	plug :authenticate when action in [:index, :show, :new, :create]
+	
 	def index(conn, _params) do
 		organizations = Repo.all(Organization)
 		
@@ -32,7 +34,16 @@ defmodule EagleEye.OrganizationController do
 				|> put_flash(:error, "organization not created!")
 				|> redirect(to: organization_path(conn, :index))
 		end
-		
 	end
-	
+
+	defp authenticate(conn, _opts) do
+		if conn.assigns.current_user do
+			conn
+		else
+			conn
+			|> put_flash(:error, "You must be logged in to access.")
+			|> redirect(to: session_path(conn, :new))
+			|> halt()
+		end
+	end
 end

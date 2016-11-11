@@ -56,7 +56,7 @@ defmodule EagleEye.CandidateController do
 		else
 			conn
 			|> put_flash(:error, "You must be logged in to access.")
-			|> redirect(to: candidate_path(conn, :index))
+			|> redirect(to: session_path(conn, :new))
 			|> halt()
 		end
 	end

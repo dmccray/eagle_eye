@@ -1,8 +1,22 @@
 defmodule EagleEye.SessionController do
 	use EagleEye.Web, :controller
+	alias EagleEye.Candidate
 
 	def new(conn, _) do
-		render conn, "new.html"
+		case get_session(conn, :user_id) do
+			nil ->
+				render conn, "new.html"
+			_ ->
+				query =
+				from c in Candidate,
+				left_join: o in assoc(c, :organization),
+				preload: :organization,
+				order_by: [asc: o.name, desc: c.id]
+
+				candidates = Repo.all(query)
+				
+				render conn, EagleEye.CandidateView, "index.html", candidates: candidates
+		end
 	end
 
 	def delete(conn, _) do
